@@ -3,6 +3,7 @@ const cors = require('cors')
 const { port } = require('./config')
 const db = require('./utils/database')
 const initModels = require('./models/initModels')
+const usersRouter = require('./users/users.router')
 
 
 const app = express()
@@ -35,5 +36,7 @@ app.get('/', (req, res) => {
         endpoint: `localhost:${port}/api/v1/`
     })
 })
+
+app.use('/api/v1/users', usersRouter)
 
 app.listen(port, () => console.log('Succes 😼😼😼 ' + port))

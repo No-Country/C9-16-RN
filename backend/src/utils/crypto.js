@@ -1,4 +1,4 @@
-const bycrypt = require('bycrypt')
+const bycrypt = require('bcrypt')
 
 const hashPassword = (plainPassword) => {
     return bycrypt.hashSync(plainPassword, 9)
