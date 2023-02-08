@@ -6,11 +6,10 @@ require('../middlewares/auth.middleware')(passport)
 
 router.route('/')
     .get(userServices.getAllUsers)
-    .post(userServices.postUser)
 
 router.route('/me')
     .get(passport.authenticate('jwt', { session: false }), userServices.getMyUser)
-    .post(passport.authenticate('jwt', { session: false }), userServices.patchMyUser)
+    .patch(passport.authenticate('jwt', { session: false }), userServices.patchMyUser)
     .delete(passport.authenticate('jwt', { session: false }), userServices.deleteMyUser)
 
 router.route('/:id')

@@ -4,6 +4,7 @@ const { port } = require('./config')
 const db = require('./utils/database')
 const initModels = require('./models/initModels')
 const usersRouter = require('./users/users.router')
+const authRouter = require('./auth/auth.router')
 
 
 const app = express()
@@ -37,6 +38,7 @@ app.get('/', (req, res) => {
     })
 })
 
+app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/users', usersRouter)
 
 app.listen(port, () => console.log('Succes 😼😼😼 ' + port))
