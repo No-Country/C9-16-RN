@@ -1,6 +1,6 @@
 const JwtStrategy = require('passport-jwt').Strategy
 const ExtractJwt = require('passport-jwt').ExtractJwt
-const { jwtSecret } = require('../config')
+const { jwtSecret } = require('../../config')
 const { getUserById } = require('../users/users.controllers')
 
 module.exports = (passport) => {

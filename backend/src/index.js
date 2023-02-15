@@ -5,6 +5,7 @@ const db = require('./utils/database')
 const initModels = require('./models/initModels')
 const usersRouter = require('./users/users.router')
 const authRouter = require('./auth/auth.router')
+const rolesRouter = require('./roles/roles.router')
 
 
 const app = express()
@@ -38,7 +39,8 @@ app.get('/', (req, res) => {
     })
 })
 
-app.use('/api/v1/auth', authRouter)
-app.use('/api/v1/users', usersRouter)
+app.use('/api/v1/MoveMind-Academy/auth', authRouter)
+app.use('/api/v1/MoveMind-Academy/users', usersRouter)
+app.use('/api/v1/MoveMind-Academy/roles', rolesRouter)
 
 app.listen(port, () => console.log('Succes 😼😼😼 ' + port))

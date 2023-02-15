@@ -21,7 +21,7 @@ const Users = db.define('users', {
     email: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
+        unique: true, 
     },
     password: {
         type: DataTypes.STRING,
@@ -39,6 +39,7 @@ const Users = db.define('users', {
     roleId: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        defaultValue: 1,
         field: 'role_id',
         references: {
             key: 'id',
