@@ -1,11 +1,13 @@
 const express = require('express')
 const cors = require('cors')
-const { port } = require('./config')
+const { api } = require('../config')
 const db = require('./utils/database')
+const responseHandlers = require('./utils/handleResponse')
 const initModels = require('./models/initModels')
 const usersRouter = require('./users/users.router')
 const authRouter = require('./auth/auth.router')
 const rolesRouter = require('./roles/roles.router')
+const disciplinesRouter = require('./disciplines/disciplines.router')
 
 
 const app = express()
@@ -33,14 +35,32 @@ db.sync()
 initModels()
 
 app.get('/', (req, res) => {
-    res.status(200).json({
+    responseHandlers.success({
+        res,
+        status: 200,
         message: 'OK',
-        endpoint: `localhost:${port}/api/v1/`
+        data: {
+            'users': 'http://localhost:9000/api/v1/MoveMind-Academy/users',
+            'login': 'http://localhost:9000/api/v1/MoveMind-Academy/auth/login',
+            'register': 'http://localhost:9000/api/v1/MoveMind-Academy/auth/register',
+            'courses': 'http://localhost:9000/api/v1/MoveMind-Academy/courses',
+            'disciplines': 'http://localhost:9000/api/v1/MoveMind-Academy/disciplines',
+        }
     })
 })
 
 app.use('/api/v1/MoveMind-Academy/auth', authRouter)
 app.use('/api/v1/MoveMind-Academy/users', usersRouter)
 app.use('/api/v1/MoveMind-Academy/roles', rolesRouter)
+app.use('/api/v1/MoveMind-Academy/disciplines', disciplinesRouter)
 
-app.listen(port, () => console.log('Succes 😼😼😼 ' + port))
+
+app.use('*', (req, res) => {
+    responseHandlers.error({
+        res,
+        status: 404,
+        message: 'URL not found, please try with http://localhost:9000/'
+    })
+})
+
+app.listen(api.port, () => console.log('Succes 😼😼😼 ' + api.port))

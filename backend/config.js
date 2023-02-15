@@ -10,7 +10,7 @@ const config = {
     db: {
         development: {
             dialect: 'postgres',
-            host: process.env.DB_PORT,
+            host: process.env.DB_HOST,
             port: process.env.DB_PORT,
             username: process.env.DB_USER,
             password: process.env.DB_PASS,
@@ -23,7 +23,7 @@ const config = {
         },
         production: {
             dialect: 'postgres',
-            host: process.env.DB_PORT,
+            host: process.env.DB_HOST,
             port: process.env.DB_PORT,
             username: process.env.DB_USER,
             password: process.env.DB_PASS,
@@ -42,7 +42,7 @@ const config = {
         },
         testing: {
             dialect: 'postgres',
-            host: process.env.DB_PORT,
+            host: process.env.DB_HOST,
             port: process.env.DB_PORT,
             username: process.env.DB_USER,
             password: process.env.DB_PASS,
