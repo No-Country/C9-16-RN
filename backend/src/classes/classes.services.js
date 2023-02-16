@@ -1,12 +1,12 @@
-const coursesControllers = require('./courses.controllers')
+const classesControllers = require('./classes.controllers')
 const handleResponse = require('../utils/handleResponse')
 
-const getAllCourses = (req, res) => {
-    coursesControllers.getAllCourses()
+const getAllClasses = (req, res) => {
+    classesControllers.getAllClasses()
         .then(data => handleResponse.success({
             res,
             status: 200,
-            message: 'All courses successfully retrieved',
+            message: 'All classes successfully retrieved',
             data
         }))
         .catch(err => handleResponse.error({
@@ -16,18 +16,18 @@ const getAllCourses = (req, res) => {
         }))
 }
 
-const getCourseById = (req, res) => {
+const getClassById = (req, res) => {
     const id = req.params.id
-    coursesControllers.getCourseById(id)
+    classesControllers.getClassById(id)
         .then(data => {
-            if (data){
+            if (data) {
                 handleResponse.success({
                     res,
                     status: 200,
-                    message: `course with id: ${id} successfully retrieved`,
+                    message: `Class with id: ${id} successfully retrieved`,
                     data
                 })
-            }else{
+            } else {
                 handleResponse.error({
                     res,
                     status: 404,
@@ -42,40 +42,15 @@ const getCourseById = (req, res) => {
         }))
 }
 
-const getCourseByName = (req, res) => {
-    const { name } = req.body
-    coursesControllers.getCourseByName(name)
-        .then(data => {
-            if (data) {
-                handleResponse.success({
-                    res,
-                    status: 200,
-                    message: `course with name: ${name} successfully retrieved`,
-                    data
-                })
-            }else{
-                handleResponse.error({
-                    res,
-                    status: 404,
-                    message: `the course with name: ${name} does not exist`
-                })
-            }
-        })
-        .catch(err => handleResponse.error({
-            res,
-            status: 404,
-            message: err.message
-        }))
-}
 
-const postCourse = (req, res) => {
-    const { name, description, status, price, disciplineId } = req.body
-    if (name && description && status && price && disciplineId) {
-        coursesControllers.createCourse({ name, description, status, price, disciplineId })
+const postClass = (req, res) => {
+    const { name, description, courseId } = req.body
+    if (name && description && courseId) {
+        classesControllers.createClass({ name, description, courseId })
             .then(data => handleResponse.success({
                 res,
                 status: 200,
-                message: 'Course created successfully ',
+                message: 'Class created successfully ',
                 data
             }))
             .catch(err => handleResponse.error({
@@ -91,25 +66,23 @@ const postCourse = (req, res) => {
             fields: {
                 'name': 'string',
                 'description': 'string',
-                'status': 'string',
-                'price': 'double',
-                'disciplineId': 'uuid',
+                'courseId': 'uuid',
             }
         })
     }
 }
 
-const patchCourse = (req, res) => {
+const patchClass = (req, res) => {
     const id = req.params.id
-    const { name, description, status, price, disciplineId } = req.body
+    const { name, description, courseId } = req.body
 
-    coursesControllers.updateCourse(id, { name, description, status, price, disciplineId })
+    classesControllers.updateClass(id, { name, description, courseId })
         .then(data => {
             if (data[0]) {
                 handleResponse.success({
                     res,
                     status: 200,
-                    message: `Course with id: ${id}, edited succesfull`,
+                    message: `Class with id: ${id}, edited succesfull`,
                     data
                 })
             } else {
@@ -127,18 +100,18 @@ const patchCourse = (req, res) => {
         }))
 }
 
-const putCourse = (req, res) => {
+const putClass = (req, res) => {
     const id = req.params.id
-    const { name, description, status, price, disciplineId } = req.body
+    const { name, description, courseId } = req.body
 
-    if (name && description && status && price && disciplineId) {
-        coursesControllers.updateCourse(id, { name, description, status, price, disciplineId })
+    if (name && description && courseId) {
+        classesControllers.updateClass(id, { name, description, courseId })
             .then(data => {
                 if (data[0]) {
                     handleResponse.success({
                         res,
                         status: 200,
-                        message: `Course with id: ${id}, edited succesfull`,
+                        message: `Class with id: ${id}, edited succesfull`,
                         data
                     })
                 } else {
@@ -162,17 +135,15 @@ const putCourse = (req, res) => {
             fields: {
                 'name': 'string',
                 'description': 'string',
-                'status': 'string',
-                'price': 'double',
-                'disciplineId': 'uuid',
+                'courseId': 'uuid',
             }
         })
     }
 }
 
-const deleteCourse = (req, res) => {
+const deleteClass = (req, res) => {
     const id = req.params.id
-    coursesControllers.deleteCourse(id)
+    classesControllers.deleteClass(id)
         .then(data => {
             if (data) {
                 handleResponse.success({
@@ -195,11 +166,10 @@ const deleteCourse = (req, res) => {
 }
 
 module.exports = {
-    getAllCourses,
-    getCourseById,
-    getCourseByName,
-    postCourse,
-    patchCourse,
-    putCourse,
-    deleteCourse,
+    getAllClasses,
+    getClassById,
+    postClass,
+    patchClass,
+    putClass,
+    deleteClass,
 }

@@ -11,6 +11,7 @@ const Courses = db.define('courses', {
     name: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
     },
     description: {
         type: DataTypes.TEXT,

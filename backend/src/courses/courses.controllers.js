@@ -51,7 +51,7 @@ const updateCourse = async (id, data) => {
     return response
 }
 
-const deleteUser = async (id) => {
+const deleteCourse = async (id) => {
     const response = await Courses.destroy({
         where: {
             id: id,
@@ -66,5 +66,5 @@ module.exports = {
     getCourseByName,
     createCourse,
     updateCourse,
-    deleteUser,
+    deleteCourse,
 }
