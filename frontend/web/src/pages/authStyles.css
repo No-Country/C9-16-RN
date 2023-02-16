@@ -1,0 +1,50 @@
+.body {
+	max-width: 375px;
+	margin: 0 auto;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+#logo {
+	margin: 10px 0px;
+}
+#filled-basic {
+	width: 100%;
+}
+.recuerdame-container {
+	display: flex;
+	justify-content: start;
+	align-items: center;
+	width: 100%;
+}
+.login-btn {
+	width: 100%;
+	border-radius: 15px;
+	padding: 15px;
+	background-color: #8c52ff;
+	border: none;
+	color: white;
+	letter-spacing: 3px;
+	margin: 15px 0;
+}
+.blue-link {
+	text-decoration: none;
+	color: #4a72ff;
+}
+.cta-container-register {
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+	margin: 20px 0;
+}
+.cta-container-register button {
+	border-radius: 15px;
+	padding: 15px;
+	background-color: #8c52ff;
+	border: none;
+	color: white;
+	letter-spacing: 3px;
+}
