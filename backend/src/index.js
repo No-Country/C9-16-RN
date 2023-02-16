@@ -8,6 +8,7 @@ const usersRouter = require('./users/users.router')
 const authRouter = require('./auth/auth.router')
 const rolesRouter = require('./roles/roles.router')
 const disciplinesRouter = require('./disciplines/disciplines.router')
+const coursesRouter = require('./courses/courses.router')
 
 
 const app = express()
@@ -45,6 +46,7 @@ app.get('/', (req, res) => {
             'register': 'http://localhost:9000/api/v1/MoveMind-Academy/auth/register',
             'courses': 'http://localhost:9000/api/v1/MoveMind-Academy/courses',
             'disciplines': 'http://localhost:9000/api/v1/MoveMind-Academy/disciplines',
+            'courses': 'http://localhost:9000/api/v1/MoveMind-Academy/courses',
         }
     })
 })
@@ -53,7 +55,7 @@ app.use('/api/v1/MoveMind-Academy/auth', authRouter)
 app.use('/api/v1/MoveMind-Academy/users', usersRouter)
 app.use('/api/v1/MoveMind-Academy/roles', rolesRouter)
 app.use('/api/v1/MoveMind-Academy/disciplines', disciplinesRouter)
-
+app.use('/api/v1/MoveMind-Academy/courses', coursesRouter)
 
 app.use('*', (req, res) => {
     responseHandlers.error({

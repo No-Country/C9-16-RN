@@ -16,6 +16,11 @@ const Courses = db.define('courses', {
         type: DataTypes.TEXT,
         allowNull: false,
     },
+    status:{
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: 'active',
+    },
     price: {
         type: DataTypes.DOUBLE,
         allowNull: false
