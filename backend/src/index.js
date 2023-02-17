@@ -23,7 +23,6 @@ const corsConfig = {
     preflightContinue: false
 }
 
-
 app.use(cors(corsConfig))
 
 db.authenticate()
@@ -42,13 +41,13 @@ app.get('/', (req, res) => {
         status: 200,
         message: 'OK',
         data: {
-            'users': 'http://localhost:9000/api/v1/MoveMind-Academy/users',
-            'login': 'http://localhost:9000/api/v1/MoveMind-Academy/auth/login',
-            'register': 'http://localhost:9000/api/v1/MoveMind-Academy/auth/register',
-            'courses': 'http://localhost:9000/api/v1/MoveMind-Academy/courses',
-            'disciplines': 'http://localhost:9000/api/v1/MoveMind-Academy/disciplines',
-            'courses': 'http://localhost:9000/api/v1/MoveMind-Academy/courses',
-            'classes': 'http://localhost:9000/api/v1/MoveMind-Academy/clases',
+            'users': 'https://movemind-academy.onrender.com/api/v1/MoveMind-Academy/users',
+            'login': 'https://movemind-academy.onrender.com/api/v1/MoveMind-Academy/auth/login',
+            'register': 'https://movemind-academy.onrender.com/api/v1/MoveMind-Academy/auth/register',
+            'courses': 'https://movemind-academy.onrender.com/api/v1/MoveMind-Academy/courses',
+            'disciplines': 'https://movemind-academy.onrender.com/api/v1/MoveMind-Academy/disciplines',
+            'courses': 'https://movemind-academy.onrender.com/api/v1/MoveMind-Academy/courses',
+            'classes': 'https://movemind-academy.onrender.com/api/v1/MoveMind-Academy/clases',
         }
     })
 })
@@ -64,7 +63,7 @@ app.use('*', (req, res) => {
     responseHandlers.error({
         res,
         status: 404,
-        message: 'URL not found, please try with http://localhost:9000/'
+        message: 'URL not found, please try with https://movemind-academy.onrender.com/'
     })
 })
 

@@ -20,10 +20,27 @@ tiene como principales funcionalidades
 - manejar rol de administrador general
 - manejar rol de control
   
-## Installation
+## Instalación
 
-utilize el comando 
+Utilize el comando 
 ```bash
 pnpm i
 ```
 para instalar todas las dependencias necesarias para el funcionamiento de la API
+
+## EndPoints
+
+- users: http://localhost:9000/api/v1/MoveMind-Academy/users
+- login: http://localhost:9000/api/v1/MoveMind-Academy/auth/login
+- register: http://localhost:9000/api/v1/MoveMind-Academy/auth/register
+- courses: http://localhost:9000/api/v1/MoveMind-Academy/courses
+- disciplines: http://localhost:9000/api/v1/MoveMind-Academy/disciplines
+- courses: http://localhost:9000/api/v1/MoveMind-Academy/courses
+- classes: http://localhost:9000/api/v1/MoveMind-Academy/clases
+
+## Uso
+
+```bash
+# inicializar el servidor
+pnpm run dev 
+```
