@@ -63,7 +63,7 @@ app.use('*', (req, res) => {
     responseHandlers.error({
         res,
         status: 404,
-        message: 'URL not found, please try with https://movemind-academy.onrender.com/'
+        message: 'URL not found, please try with https://movemind-academy.onrender.com'
     })
 })
 
