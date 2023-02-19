@@ -25,6 +25,9 @@ const Classes = db.define('classes', {
             key: 'id',
             model: Courses
         }
+    },
+    imageURL: {
+        type: DataTypes.STRING,
     }
 })
 

@@ -1,36 +1,77 @@
 const usersControllers = require('./users.controllers')
+const handleResponse = require('../utils/handleResponse')
 
 const getAllUsers = (req, res) => {
     usersControllers.getAllUsers()
-        .then(data => res.status(200).json(data))
-        .catch(err => res.status(400).json({ message: err.message }))
+        .then(data => handleResponse.success({
+            res,
+            status: 200,
+            message: 'All users successfully retrieved',
+            data
+        }))
+        .catch(err => handleResponse.error({
+            res,
+            status: 400,
+            message: err.message
+        }))
 }
 
 const getUserById = (req, res) => {
     const id = req.params.id
 
     usersControllers.getUserById(id)
-        .then(data => res.status(200).json(data))
-        .catch(err => res.status(404).json({ message: err.message }))
+        .then(data => {
+            if (data) {
+                handleResponse.success({
+                    res,
+                    status: 200,
+                    message: `User with id: ${id} successfully retrieved`,
+                    data
+                })
+            } else {
+                handleResponse.error({
+                    res,
+                    status: 404,
+                    message: 'Invalid Id'
+                })
+            }
+        })
+        .catch(err => handleResponse.error({
+            res,
+            status: 400,
+            message: err.message
+        }))
 }
 
 const postUser = (req, res) => {
-    const { firstName, lastName, email, password, phone, profileImage, roleId } = req.body
-    if (firstName && lastName && email && password && phone && profileImage && roleId) {
-        usersControllers.createUser({ firstName, lastName, email, password, phone, profileImage, roleId })
-            .then(data => res.status(200).json(data))
-            .catch(err => res.status(400).json({ message: err.message }))
+    const { body: { firstName, lastName, email, password, phone, roleId }, file: { path } } = req
+
+    if (firstName && lastName && email && password && phone && roleId) {
+        usersControllers.createUser({ firstName, lastName, email, password, phone, path, roleId })
+            .then(data => handleResponse.success({
+                res,
+                status: 200,
+                message: 'User created successfully',
+                data
+            }))
+            .catch(err => handleResponse.error({
+                res,
+                status: 400,
+                message: err.message
+            }))
     } else {
-        res.status(400).json({
-            message: 'All fields must be completed',
+        handleResponse.error({
+            res,
+            status: 400,
+            message: 'lack of completing fields',
             fields: {
-                firstName: 'string',
-                lastName: 'string',
-                email: 'example@example.com',
-                password: 'string',
-                phone: '+593999999999',
-                profileImage: 'string',
-                roleId: 'number'
+                'firstName': 'string',
+                'lastName': 'string',
+                'email': 'example@example.com',
+                'password': 'string',
+                'phone': '+593999999999',
+                'profileImage': 'url',
+                'roleId': 'number'
             }
         })
     }
@@ -43,12 +84,25 @@ const patchUser = (req, res) => {
     usersControllers.updateUser(id, { firstName, lastName, email, password, phone, profileImage, roleId })
         .then(data => {
             if (data[0]) {
-                res.status(200).json({ message: `User with id: ${id}, edited succesfull` })
+                handleResponse.success({
+                    res,
+                    status: 200,
+                    message: `User with id: ${id}, edited succesfull`,
+                    data
+                })
             } else {
-                res.status(400).json({ message: 'Invalid ID' })
+                handleResponse.error({
+                    res,
+                    status: 404,
+                    message: 'Invalid Id'
+                })
             }
         })
-        .catch(err => res.status(404).json({ message: err.message }))
+        .catch(err => handleResponse.error({
+            res,
+            status: 404,
+            message: err.message
+        }))
 }
 
 const deleteUser = (req, res) => {
@@ -57,36 +111,76 @@ const deleteUser = (req, res) => {
     usersControllers.deleteUser(id)
         .then(data => {
             if (data) {
-                res.status(404).json()
+                handleResponse.success({
+                    res,
+                    status: 404,
+                    data
+                })
             } else {
-                res.status(400).json({ message: 'Invalid ID' })
+                handleResponse.error({
+                    res,
+                    status: 404,
+                    message: 'Invalid Id'
+                })
             }
         })
-        .catch(err => res.status(400).json({ message: err.message }))
+        .catch(err => handleResponse.error({
+            res,
+            status: 400,
+            message: err.message
+        }))
 }
 
 const getMyUser = (req, res) => {
     const id = req.user.id
 
     usersControllers.getUserById(id)
-        .then(data => res.status(200).json(data))
-        .catch(err => res.status(400).json({ message: err.message }))
+        .then(data => handleResponse.success({
+            res,
+            status: 200,
+            message: 'Your user successfully retrieved',
+            data
+        }))
+        .catch(err => handleResponse.error({
+            res,
+            status: 400,
+            message: err.message
+        }))
 }
 
 const patchMyUser = (req, res) => {
     const id = req.user.id
     const { firstName, lastName, email, password, phone, profileImage, roleId } = req.body
     usersControllers.updateUser(id, { firstName, lastName, email, password, phone, profileImage, roleId })
-        .then(() => res.status(200).json({ message: `User with id: ${id}, edited succesfull` }))
-        .catch(err => res.status(404).json({ message: err.message }))
+        .then(() => handleResponse.success({
+            res,
+            status: 200,
+            message: `User with id: ${id}, edited succesfull`,
+            data
+        }))
+        .catch(err => handleResponse.error({
+            res,
+            status: 404,
+            message: err.message
+        }))
 }
 
 const deleteMyUser = (req, res) => {
     const id = req.user.id
 
     usersControllers.updateUser(id, { status: 'inactive' })
-        .then(() => res.status(200).json({ message: 'your account has been deactivated' }))
-        .catch(err => res.status(400).json({ message: err.message }))
+        .then(() =>
+            handleResponse.success({
+                res,
+                status: 200,
+                message: 'your account has been deactivated',
+                data
+            }))
+        .catch(err => handleResponse.error({
+            res,
+            status: 400,
+            message: err.message
+        }))
 }
 
 module.exports = {

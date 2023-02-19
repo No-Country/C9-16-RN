@@ -32,8 +32,7 @@ const Users = db.define('users', {
         allowNull: false,
     },
     profileImage: {
-        type: DataTypes.TEXT,
-        allowNull: false,
+        type: DataTypes.STRING,
         field: 'profile_image',
     },
     roleId: {

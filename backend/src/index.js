@@ -11,9 +11,9 @@ const disciplinesRouter = require('./disciplines/disciplines.router')
 const coursesRouter = require('./courses/courses.router')
 const classesRouter = require('./classes/classes.router')
 
-
 const app = express()
 app.use(express.json())
+app.use(express.static('public'))
 
 const corsConfig = {
     allowedHeaders: ['sessionId', 'Content-Type'],
@@ -41,13 +41,13 @@ app.get('/', (req, res) => {
         status: 200,
         message: 'OK',
         data: {
-            'users': 'https://movemind-academy.onrender.com/api/v1/MoveMind-Academy/users',
-            'login': 'https://movemind-academy.onrender.com/api/v1/MoveMind-Academy/auth/login',
-            'register': 'https://movemind-academy.onrender.com/api/v1/MoveMind-Academy/auth/register',
-            'courses': 'https://movemind-academy.onrender.com/api/v1/MoveMind-Academy/courses',
-            'disciplines': 'https://movemind-academy.onrender.com/api/v1/MoveMind-Academy/disciplines',
-            'courses': 'https://movemind-academy.onrender.com/api/v1/MoveMind-Academy/courses',
-            'classes': 'https://movemind-academy.onrender.com/api/v1/MoveMind-Academy/clases',
+            'users': `${api.host}/api/v1/MoveMind-Academy/users`,
+            'login': `${api.host}/api/v1/MoveMind-Academy/auth/login`,
+            'register': `${api.host}/api/v1/MoveMind-Academy/auth/register`,
+            'courses': `${api.host}/api/v1/MoveMind-Academy/courses`,
+            'disciplines': `${api.host}/api/v1/MoveMind-Academy/disciplines`,
+            'courses': `${api.host}/api/v1/MoveMind-Academy/courses`,
+            'classes': `${api.host}/api/v1/MoveMind-Academy/classes`,
         }
     })
 })
@@ -63,7 +63,7 @@ app.use('*', (req, res) => {
     responseHandlers.error({
         res,
         status: 404,
-        message: 'URL not found, please try with https://movemind-academy.onrender.com'
+        message: `URL not found, please try with: https://movemind-academy.onrender.com`
     })
 })
 
