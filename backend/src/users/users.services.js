@@ -1,4 +1,6 @@
 const usersControllers = require('./users.controllers')
+const { uploadFile } = require('../utils/firebase')
+
 const handleResponse = require('../utils/handleResponse')
 
 const getAllUsers = (req, res) => {
@@ -43,22 +45,23 @@ const getUserById = (req, res) => {
         }))
 }
 
-const postUser = (req, res) => {
-    const { body: { firstName, lastName, email, password, phone, roleId }, file: { path } } = req
+const postUser = async (req, res) => {
+    const { body: { firstName, lastName, email, password, phone, roleId, imageUrl }, file } = req
 
     if (firstName && lastName && email && password && phone && roleId) {
-        usersControllers.createUser({ firstName, lastName, email, password, phone, path, roleId })
-            .then(data => handleResponse.success({
-                res,
-                status: 200,
-                message: 'User created successfully',
-                data
-            }))
-            .catch(err => handleResponse.error({
-                res,
-                status: 400,
-                message: err.message
-            }))
+        const URL = file ? await uploadFile(file, 'users', res) : imageUrl
+            usersControllers.createUser({ firstName, lastName, email, password, phone, URL, roleId })
+                .then(data => handleResponse.success({
+                    res,
+                    status: 200,
+                    message: 'User created successfully',
+                    data
+                }))
+                .catch(err => handleResponse.error({
+                    res,
+                    status: 400,
+                    message: err.message
+                }))
     } else {
         handleResponse.error({
             res,

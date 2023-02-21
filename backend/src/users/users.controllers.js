@@ -30,7 +30,7 @@ const createUser = async (data) => {
         email: data.email,
         password: hashPassword(data.password),
         phone: data.phone,
-        profileImage: parseURL(data.path),
+        profileImage: data.URL,
         roleId: data.roleId,
     })
     return newUser

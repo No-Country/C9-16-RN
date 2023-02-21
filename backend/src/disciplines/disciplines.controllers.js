@@ -1,8 +1,18 @@
 const Disciplines = require('../models/disciplines.models')
 const uuid = require('uuid')
+const Courses = require('../models/courses.models')
 
 const getAllDisciplines = async () => {
-    const response = await Disciplines.findAll()
+    const response = await Disciplines.findAll({
+        include: [
+            {
+                model: Courses,
+                attributes:{
+                    exclude: []
+                }
+            }
+        ]
+    })
     return response
 }
 

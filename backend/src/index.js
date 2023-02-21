@@ -13,7 +13,6 @@ const classesRouter = require('./classes/classes.router')
 
 const app = express()
 app.use(express.json())
-app.use(express.static('public'))
 
 const corsConfig = {
     allowedHeaders: ['sessionId', 'Content-Type'],
