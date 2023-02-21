@@ -73,7 +73,7 @@ const postUser = async (req, res) => {
                 'email': 'example@example.com',
                 'password': 'string',
                 'phone': '+593999999999',
-                'profileImage': 'url',
+                'profileImage': 'file or URL image',
                 'roleId': 'number'
             }
         })
