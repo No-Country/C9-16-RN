@@ -8,7 +8,7 @@ const getAllDisciplines = async () => {
             {
                 model: Courses,
                 attributes:{
-                    exclude: []
+                    exclude: ['disciplineId', 'createdAt', 'updatedAt']
                 }
             }
         ]

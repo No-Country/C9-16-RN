@@ -46,11 +46,11 @@ const getUserById = (req, res) => {
 }
 
 const postUser = async (req, res) => {
-    const { body: { firstName, lastName, email, password, phone, roleId, imageUrl }, file } = req
+    const { body: { firstName, lastName, email, password, phone,country, role, profileImage }, file } = req
 
-    if (firstName && lastName && email && password && phone && roleId) {
-        const URL = file ? await uploadFile(file, 'users', res) : imageUrl
-            usersControllers.createUser({ firstName, lastName, email, password, phone, URL, roleId })
+    if (firstName && lastName && email && password && phone && country&& role) {
+        const URL = file ? await uploadFile(file, 'users', res) : profileImage
+            usersControllers.createUser({ firstName, lastName, email, password, phone, URL, country, role })
                 .then(data => handleResponse.success({
                     res,
                     status: 200,
@@ -73,8 +73,9 @@ const postUser = async (req, res) => {
                 'email': 'example@example.com',
                 'password': 'string',
                 'phone': '+593999999999',
+                'country': 'string',
                 'profileImage': 'file or URL image',
-                'roleId': 'number'
+                'role': 'string'
             }
         })
     }

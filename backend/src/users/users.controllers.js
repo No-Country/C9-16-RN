@@ -29,8 +29,9 @@ const createUser = async (data) => {
         email: data.email,
         password: hashPassword(data.password),
         phone: data.phone,
+        country: data.country,
         profileImage: data.URL,
-        roleId: data.roleId,
+        role: data.role,
     })
     return newUser
 }

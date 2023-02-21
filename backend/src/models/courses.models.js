@@ -26,6 +26,10 @@ const Courses = db.define('courses', {
         type: DataTypes.DOUBLE,
         allowNull: false
     },
+    level:{
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
     disciplineId: {
         type: DataTypes.UUID,
         allowNull: false,

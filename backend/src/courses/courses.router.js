@@ -12,7 +12,7 @@ router.route('/:id')
 router.route('/my-courses')
     .post(courseServices.postCourse)
 
-router.route('/my-courses/:id')
+router.route('/my-courses/:id') 
     .patch(courseServices.patchCourse)
     .put(courseServices.putCourse)
     .delete(courseServices.deleteCourse)

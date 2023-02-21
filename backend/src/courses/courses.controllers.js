@@ -1,10 +1,20 @@
 const Courses = require('../models/courses.models')
 const uuid = require('uuid')
+const Classes = require('../models/classes.models')
 
 const getAllCourses = async () => {
     const response = await Courses.findAll({
         where: {
             status: 'active'
+        },
+        include: {
+            model: Classes,
+            attributes: {
+                exclude: ['courseId', 'createdAt', 'updatedAt']
+            }
+        }, 
+        attributes:{
+            exclude: ['createdAt', 'updatedAt']
         }
     })
     return response
@@ -37,6 +47,7 @@ const createCourse = async (data) => {
         description: data.description,
         price: data.price,
         status: data.status,
+        level: data.level,
         disciplineId: data.disciplineId
     })
     return newCourse

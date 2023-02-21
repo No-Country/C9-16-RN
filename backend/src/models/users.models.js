@@ -1,6 +1,5 @@
 const { DataTypes } = require('sequelize')
 const db = require('../utils/database')
-const Roles = require('./roles.models')
 
 const Users = db.define('users', {
     id: {
@@ -21,7 +20,7 @@ const Users = db.define('users', {
     email: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true, 
+        unique: true,
     },
     password: {
         type: DataTypes.STRING,
@@ -31,19 +30,18 @@ const Users = db.define('users', {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    country: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     profileImage: {
         type: DataTypes.STRING,
         field: 'profile_image',
     },
-    roleId: {
-        type: DataTypes.INTEGER,
+    role: {
+        type: DataTypes.ENUM('student', 'instructor'),
         allowNull: false,
-        defaultValue: 1,
-        field: 'role_id',
-        references: {
-            key: 'id',
-            model: Roles
-        }
+        defaultValue: 'student',
     },
     status: {
         type: DataTypes.STRING,

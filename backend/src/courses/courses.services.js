@@ -20,14 +20,14 @@ const getCourseById = (req, res) => {
     const id = req.params.id
     coursesControllers.getCourseById(id)
         .then(data => {
-            if (data){
+            if (data) {
                 handleResponse.success({
                     res,
                     status: 200,
                     message: `course with id: ${id} successfully retrieved`,
                     data
                 })
-            }else{
+            } else {
                 handleResponse.error({
                     res,
                     status: 404,
@@ -53,7 +53,7 @@ const getCourseByName = (req, res) => {
                     message: `course with name: ${name} successfully retrieved`,
                     data
                 })
-            }else{
+            } else {
                 handleResponse.error({
                     res,
                     status: 404,
@@ -69,9 +69,9 @@ const getCourseByName = (req, res) => {
 }
 
 const postCourse = (req, res) => {
-    const { name, description, status, price, disciplineId } = req.body
-    if (name && description && status && price && disciplineId) {
-        coursesControllers.createCourse({ name, description, status, price, disciplineId })
+    const { name, description, status, price, level, disciplineId } = req.body
+    if (name && description && status && price && level && disciplineId) {
+        coursesControllers.createCourse({ name, description, status, price, level, disciplineId })
             .then(data => handleResponse.success({
                 res,
                 status: 200,
