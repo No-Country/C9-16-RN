@@ -1,6 +1,4 @@
 const usersControllers = require('./users.controllers')
-const { uploadFile } = require('../utils/firebase')
-
 const handleResponse = require('../utils/handleResponse')
 
 const getAllUsers = (req, res) => {
@@ -45,23 +43,21 @@ const getUserById = (req, res) => {
         }))
 }
 
-const postUser = async (req, res) => {
-    const { body: { firstName, lastName, email, password, phone,country, role, profileImage }, file } = req
-
-    if (firstName && lastName && email && password && phone && country&& role) {
-        const URL = file ? await uploadFile(file, 'users') : profileImage
-            usersControllers.createUser({ firstName, lastName, email, password, phone, URL, country, role })
-                .then(data => handleResponse.success({
-                    res,
-                    status: 200,
-                    message: 'User created successfully',
-                    data
-                }))
-                .catch(err => handleResponse.error({
-                    res,
-                    status: 400,
-                    message: err.message
-                }))
+const postUser = (req, res) => {
+    const { body: { firstName, lastName, email, password, phone, country, role, profileImage }, file } = req
+    if (firstName && lastName && email && password && phone && country && role) {
+        usersControllers.createUser({ firstName, lastName, email, password, phone, profileImage, country, role }, file)
+            .then(data => handleResponse.success({
+                res,
+                status: 200,
+                message: 'User created successfully',
+                data
+            }))
+            .catch(err => handleResponse.error({
+                res,
+                status: 400,
+                message: err.message
+            }))
     } else {
         handleResponse.error({
             res,
@@ -81,11 +77,11 @@ const postUser = async (req, res) => {
     }
 }
 
-const patchUser = (req, res) => {
+/* const patchUser = (req, res) => {
     const id = req.params.id
-    const { firstName, lastName, email, password, phone, profileImage, roleId } = req.body
+    const { firstName, lastName, email, password, phone, country, role, profileImage } = req.body
 
-    usersControllers.updateUser(id, { firstName, lastName, email, password, phone, profileImage, roleId })
+    usersControllers.updateUser(id, { firstName, lastName, email, password, phone, country, role, profileImage })
         .then(data => {
             if (data[0]) {
                 handleResponse.success({
@@ -107,9 +103,9 @@ const patchUser = (req, res) => {
             status: 404,
             message: err.message
         }))
-}
+} */
 
-const deleteUser = (req, res) => {
+/* const deleteUser = (req, res) => {
     const id = req.params.id
 
     usersControllers.deleteUser(id)
@@ -133,7 +129,7 @@ const deleteUser = (req, res) => {
             status: 400,
             message: err.message
         }))
-}
+} */
 
 const getMyUser = (req, res) => {
     const id = req.user.id
@@ -154,8 +150,8 @@ const getMyUser = (req, res) => {
 
 const patchMyUser = (req, res) => {
     const id = req.user.id
-    const { firstName, lastName, email, password, phone, profileImage, role } = req.body
-    usersControllers.updateUser(id, { firstName, lastName, email, password, phone, profileImage, role })
+    const { body: { firstName, lastName, email, password, phone, country, profileImage }, file } = req
+    usersControllers.updateUser(id, { firstName, lastName, email, password, phone, country, profileImage }, file)
         .then(() => handleResponse.success({
             res,
             status: 200,
@@ -170,7 +166,6 @@ const patchMyUser = (req, res) => {
 
 const deleteMyUser = (req, res) => {
     const id = req.user.id
-
     usersControllers.updateUser(id, { status: 'inactive' })
         .then(() =>
             handleResponse.success({
@@ -189,8 +184,8 @@ module.exports = {
     getAllUsers,
     getUserById,
     postUser,
-    patchUser,
-    deleteUser,
+    /*  patchUser,
+     deleteUser, */
     getMyUser,
     patchMyUser,
     deleteMyUser,

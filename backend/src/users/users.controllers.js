@@ -2,6 +2,7 @@ const uuid = require('uuid')
 const Users = require('../models/users.models')
 const Instructors = require('../models/instructors.models')
 const { hashPassword } = require('../utils/crypto')
+const { uploadFile } = require('../utils/firebase')
 const { createInstructor } = require('../instructors/instructors.controllers')
 
 const getAllUsers = async () => {
@@ -35,8 +36,9 @@ const getUserById = async (id) => {
     return response
 }
 
-const createUser = async (data) => {
+const createUser = async (data, file) => {
     const userId = uuid.v4()
+    const URL = file ? await uploadFile(file, 'users', userId) : data.profileImage
     const newUser = await Users.create({
         id: userId,
         firstName: data.firstName,
@@ -45,7 +47,7 @@ const createUser = async (data) => {
         password: hashPassword(data.password),
         phone: data.phone,
         country: data.country,
-        profileImage: data.URL,
+        profileImage: URL,
         role: data.role,
     })
     if (data.role === 'instructor') {
@@ -55,7 +57,9 @@ const createUser = async (data) => {
     return newUser
 }
 
-const updateUser = async (id, data) => {
+const updateUser = async (id, data, file) => {
+    const URL = file ? await uploadFile(file, 'users', id) : data.profileImage
+    data.profileImage = URL
     const response = await Users.update(data, {
         where: {
             id: id,

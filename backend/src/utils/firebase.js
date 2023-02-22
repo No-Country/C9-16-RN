@@ -13,10 +13,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const storage = getStorage(app)
 
-const uploadFile = async (file, path) => {
+const uploadFile = async (file, path, userId) => {
     const ext = file.originalname.split('.').pop()
-    const name = file.originalname.split('.').shift()
-    const storageRef = ref(storage, `${path}/${name}-${Date.now()}.${ext}`)
+    const storageRef = ref(storage, `${path}/profile-${userId}.${ext}`)
     const metadata = {
         contentType: file.mimetype,
     };
