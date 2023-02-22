@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const courseServices = require('./courses.services')
 
+
 router.route('/')
     .get(courseServices.getAllCourses)
 
