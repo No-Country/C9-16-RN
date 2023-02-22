@@ -15,7 +15,7 @@ router.route('/me')
 
 router.route('/me/instructor')
     .patch(passport.authenticate('jwt', { session: false }), instructorServices.patchInstructor)
-    
+
 router.route('/:id')
     .get(userServices.getUserById)
 
