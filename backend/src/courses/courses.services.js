@@ -69,6 +69,7 @@ const getCourseByName = (req, res) => {
 }
 
 const postCourse = (req, res) => {
+    const idInstructor = req.user.id
     const { name, description, status, price, level, disciplineId } = req.body
     if (name && description && status && price && level && disciplineId) {
         coursesControllers.createCourse({ name, description, status, price, level, disciplineId })

@@ -49,7 +49,7 @@ const postUser = async (req, res) => {
     const { body: { firstName, lastName, email, password, phone,country, role, profileImage }, file } = req
 
     if (firstName && lastName && email && password && phone && country&& role) {
-        const URL = file ? await uploadFile(file, 'users', res) : profileImage
+        const URL = file ? await uploadFile(file, 'users') : profileImage
             usersControllers.createUser({ firstName, lastName, email, password, phone, URL, country, role })
                 .then(data => handleResponse.success({
                     res,
@@ -154,13 +154,12 @@ const getMyUser = (req, res) => {
 
 const patchMyUser = (req, res) => {
     const id = req.user.id
-    const { firstName, lastName, email, password, phone, profileImage, roleId } = req.body
-    usersControllers.updateUser(id, { firstName, lastName, email, password, phone, profileImage, roleId })
+    const { firstName, lastName, email, password, phone, profileImage, role } = req.body
+    usersControllers.updateUser(id, { firstName, lastName, email, password, phone, profileImage, role })
         .then(() => handleResponse.success({
             res,
             status: 200,
             message: `User with id: ${id}, edited succesfull`,
-            data
         }))
         .catch(err => handleResponse.error({
             res,
@@ -178,7 +177,6 @@ const deleteMyUser = (req, res) => {
                 res,
                 status: 200,
                 message: 'your account has been deactivated',
-                data
             }))
         .catch(err => handleResponse.error({
             res,

@@ -54,6 +54,8 @@ const Users = db.define('users', {
         field: 'is_verified',
         defaultValue: false
     }
+},{
+    inheritance: true
 })
 
 module.exports = Users

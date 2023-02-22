@@ -1,11 +1,19 @@
 const uuid = require('uuid')
 const Users = require('../models/users.models')
+const Instructors = require('../models/instructors.models')
 const { hashPassword } = require('../utils/crypto')
+const { createInstructor } = require('../instructors/instructors.controllers')
 
 const getAllUsers = async () => {
     const response = await Users.findAll({
         where: {
             status: 'active'
+        }, 
+        include:{
+            model: Instructors,
+            attributes:{
+                exclude: ['userId', 'createdAt', 'updatedAt']
+            }
         }
     })
     return response
@@ -16,14 +24,21 @@ const getUserById = async (id) => {
         where: {
             id: id,
             status: 'active'
+        }, 
+        include:{
+            model: Instructors,
+            attributes:{
+                exclude: ['userId', 'createdAt', 'updatedAt']
+            }
         }
     })
     return response
 }
 
 const createUser = async (data) => {
+    const userId = uuid.v4()
     const newUser = await Users.create({
-        id: uuid.v4(),
+        id: userId,
         firstName: data.firstName,
         lastName: data.lastName,
         email: data.email,
@@ -33,6 +48,10 @@ const createUser = async (data) => {
         profileImage: data.URL,
         role: data.role,
     })
+    if (data.role === 'instructor') {
+        await createInstructor(userId)
+    }
+
     return newUser
 }
 

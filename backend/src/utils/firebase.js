@@ -1,6 +1,5 @@
 const { initializeApp } = require('firebase/app')
 const { getStorage, ref, uploadBytes, getDownloadURL } = require('firebase/storage')
-const handleResponse = require('../utils/handleResponse')
 
 const firebaseConfig = {
     apiKey: "AIzaSyA4oZPjUOi3Zpy0N1yDc9cOP5yuboJRTvU",
@@ -14,8 +13,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const storage = getStorage(app)
 
-
-const uploadFile = async (file, path, res) => {
+const uploadFile = async (file, path) => {
     const ext = file.originalname.split('.').pop()
     const name = file.originalname.split('.').shift()
     const storageRef = ref(storage, `${path}/${name}-${Date.now()}.${ext}`)
